@@ -1,15 +1,32 @@
-import UrlValidator from '../../external/validators/UrlValidator'
 import ResourceValidator from '../validators/ResourceValidator'
+import UrlValidator from '../../external/validators/UrlValidator'
+import Id from '../shared/Id'
+import Uuid from '../../external/shared/Uuid'
 import Resource, { ResouceType } from './Resource'
 
 describe('Resource Model', () => {
   const urlValidator: ResourceValidator = new UrlValidator()
+  const uuid: Id = new Uuid()
 
   it('should create a resource with valid URL', () => {
     const resource = new Resource(
       ResouceType.image,
       'https://example.com/image.jpg',
-      urlValidator
+      urlValidator,
+      uuid
+    )
+    expect(resource.id).toBeDefined()
+    expect(resource.type).toBe(ResouceType.image)
+    expect(resource.url).toBe('https://example.com/image.jpg')
+  })
+
+  it('should create a resource with valid URL and with an id', () => {
+    const resource = new Resource(
+      ResouceType.image,
+      'https://example.com/image.jpg',
+      urlValidator,
+      uuid,
+      'aa7f4426-d18a-470d-b3fc-25ac1a630cdc'
     )
     expect(resource.id).toBeDefined()
     expect(resource.type).toBe(ResouceType.image)
@@ -18,7 +35,7 @@ describe('Resource Model', () => {
 
   it('should throw an error for empty URL', () => {
     expect(() => {
-      new Resource(ResouceType.image, '', urlValidator)
+      new Resource(ResouceType.image, '', urlValidator, uuid)
     }).toThrow('URL cannot be empty')
   })
 
@@ -27,14 +44,15 @@ describe('Resource Model', () => {
       new Resource(
         'invalid-type' as unknown as ResouceType,
         'https://example.com/image.jpg',
-        urlValidator
+        urlValidator,
+        uuid
       )
     }).toThrow('Type must be either video or image')
   })
 
   it('should throw an error for invalid URL', () => {
     expect(() => {
-      new Resource(ResouceType.video, 'invalid-url', urlValidator)
+      new Resource(ResouceType.video, 'invalid-url', urlValidator, uuid)
     }).toThrow('Invalid URL')
   })
 })

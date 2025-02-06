@@ -1,14 +1,14 @@
-import { v4 as uuidv4 } from 'uuid'
-
+import Id from '../shared/Id'
 import Resource from './Resource'
 
 class Place {
-  id: string
-  name: string
-  description: string
-  resources: Resource[]
-
-  constructor(name: string, description: string, resources: Resource[]) {
+  constructor(
+    public name: string,
+    public description: string,
+    public resources: Resource[],
+    private ID: Id,
+    public id?: string
+  ) {
     if (!name) {
       throw new Error('Name cannot be empty or null or undefined')
     }
@@ -17,7 +17,8 @@ class Place {
       throw new Error('Description cannot be empty or null or undefined')
     }
 
-    this.id = uuidv4()
+    this.id = id ? id : ID.generate()
+
     this.name = name
     this.description = description
     this.resources = resources

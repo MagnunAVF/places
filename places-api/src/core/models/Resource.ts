@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from 'uuid'
 import ResourceValidator from '../validators/ResourceValidator'
+import Id from '../shared/Id'
 
 export enum ResouceType {
   'video',
@@ -7,15 +7,12 @@ export enum ResouceType {
 }
 
 class Resource {
-  id: string
-  type: ResouceType
-  url: string
-  resourceValidator: ResourceValidator
-
   constructor(
-    type: ResouceType,
-    url: string,
-    resourceValidator: ResourceValidator
+    public type: ResouceType,
+    public url: string,
+    private resourceValidator: ResourceValidator,
+    private ID: Id,
+    public id?: string
   ) {
     if (type !== ResouceType.video && type !== ResouceType.image) {
       throw new Error('Type must be either video or image')
@@ -31,7 +28,8 @@ class Resource {
       throw new Error('Invalid URL')
     }
 
-    this.id = uuidv4()
+    this.id = id ? id : ID.generate()
+
     this.type = type
     this.url = url
   }
