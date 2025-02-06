@@ -1,10 +1,15 @@
-import { Resource, ResouceType } from './Resource'
+import UrlValidator from '../../external/validators/UrlValidator'
+import ResourceValidator from '../validators/ResourceValidator'
+import Resource, { ResouceType } from './Resource'
 
 describe('Resource Model', () => {
+  const urlValidator: ResourceValidator = new UrlValidator()
+
   it('should create a resource with valid URL', () => {
     const resource = new Resource(
       ResouceType.image,
-      'https://example.com/image.jpg'
+      'https://example.com/image.jpg',
+      urlValidator
     )
     expect(resource.id).toBeDefined()
     expect(resource.type).toBe(ResouceType.image)
@@ -13,7 +18,7 @@ describe('Resource Model', () => {
 
   it('should throw an error for empty URL', () => {
     expect(() => {
-      new Resource(ResouceType.image, '')
+      new Resource(ResouceType.image, '', urlValidator)
     }).toThrow('URL cannot be empty')
   })
 
@@ -21,14 +26,15 @@ describe('Resource Model', () => {
     expect(() => {
       new Resource(
         'invalid-type' as unknown as ResouceType,
-        'https://example.com/image.jpg'
+        'https://example.com/image.jpg',
+        urlValidator
       )
     }).toThrow('Type must be either video or image')
   })
 
   it('should throw an error for invalid URL', () => {
     expect(() => {
-      new Resource(ResouceType.video, 'invalid-url')
+      new Resource(ResouceType.video, 'invalid-url', urlValidator)
     }).toThrow('Invalid URL')
   })
 })

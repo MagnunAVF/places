@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { Resource } from './Resource'
+import Resource from './Resource'
 
-export class Place {
+class Place {
   id: string
   name: string
   description: string
@@ -23,3 +23,5 @@ export class Place {
     this.resources = resources
   }
 }
+
+export default Place

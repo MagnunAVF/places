@@ -1,5 +1,5 @@
-import { Place } from './Place'
-import { Resource } from './Resource'
+import Place from './Place'
+import Resource from './Resource'
 
 describe('Place Model', () => {
   it('should create a Place instance with valid inputs', () => {
