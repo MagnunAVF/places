@@ -7,7 +7,9 @@ class Place {
     public description: string,
     public resources: Resource[],
     private ID: Id,
-    public id?: string
+    public id?: string,
+    public createAt?: Date,
+    public updatedAt?: Date
   ) {
     if (!name) {
       throw new Error('Name cannot be empty or null or undefined')
@@ -22,6 +24,8 @@ class Place {
     this.name = name
     this.description = description
     this.resources = resources
+    this.createAt = createAt
+    this.updatedAt = updatedAt
   }
 }
 
