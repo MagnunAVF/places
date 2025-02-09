@@ -1,5 +1,10 @@
 import ResourceValidator from '../validators/ResourceValidator'
 import Id from '../shared/Id'
+import {
+  EmptyUrlError,
+  InvalidResourceTypeError,
+  InvalidUrlError,
+} from '../shared/Error'
 
 export enum ResourceType {
   'video',
@@ -19,11 +24,11 @@ class Resource {
     this.resourceValidator = resourceValidator
 
     if (!url) {
-      throw new Error('URL cannot be empty or null or undefined')
+      throw new EmptyUrlError()
     }
 
     if (!this.resourceValidator.isValid(url)) {
-      throw new Error('Invalid URL')
+      throw new InvalidUrlError()
     }
 
     this.id = id ? id : ID.generate()
@@ -39,9 +44,7 @@ class Resource {
       case 'image':
         return ResourceType.image
       default:
-        throw new Error(
-          'Invalid resource type. Type must be either video or image'
-        )
+        throw new InvalidResourceTypeError()
     }
   }
 }

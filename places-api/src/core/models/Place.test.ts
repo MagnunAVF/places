@@ -2,6 +2,7 @@ import Place from './Place'
 import Resource from './Resource'
 import Id from '../shared/Id'
 import Uuid from '../../external/shared/Uuid'
+import { EmptyDescriptionError, EmptyNameError } from '../shared/Error'
 
 describe('Place Model', () => {
   const uuid: Id = new Uuid()
@@ -39,7 +40,7 @@ describe('Place Model', () => {
 
     expect(() => {
       new Place('', 'A nice place to relax', resources, uuid)
-    }).toThrow('Name cannot be empty or null or undefined')
+    }).toThrow(EmptyNameError)
   })
 
   it('should throw an error if name is null', () => {
@@ -52,7 +53,7 @@ describe('Place Model', () => {
         resources,
         uuid
       )
-    }).toThrow('Name cannot be empty or null or undefined')
+    }).toThrow(EmptyNameError)
   })
 
   it('should throw an error if name is undefined', () => {
@@ -65,7 +66,7 @@ describe('Place Model', () => {
         resources,
         uuid
       )
-    }).toThrow('Name cannot be empty or null or undefined')
+    }).toThrow(EmptyNameError)
   })
 
   it('should throw an error if description is empty', () => {
@@ -73,7 +74,7 @@ describe('Place Model', () => {
 
     expect(() => {
       new Place('Park', '', resources, uuid)
-    }).toThrow('Description cannot be empty or null or undefined')
+    }).toThrow(EmptyDescriptionError)
   })
 
   it('should throw an error if description is null', () => {
@@ -81,7 +82,7 @@ describe('Place Model', () => {
 
     expect(() => {
       new Place('Park', null as unknown as string, resources, uuid)
-    }).toThrow('Description cannot be empty or null or undefined')
+    }).toThrow(EmptyDescriptionError)
   })
 
   it('should throw an error if description is undefined', () => {
@@ -89,6 +90,6 @@ describe('Place Model', () => {
 
     expect(() => {
       new Place('Park', undefined as unknown as string, resources, uuid)
-    }).toThrow('Description cannot be empty or null or undefined')
+    }).toThrow(EmptyDescriptionError)
   })
 })

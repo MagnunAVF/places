@@ -3,6 +3,11 @@ import UrlValidator from '../../external/validators/UrlValidator'
 import Id from '../shared/Id'
 import Uuid from '../../external/shared/Uuid'
 import Resource, { ResourceType } from './Resource'
+import {
+  EmptyUrlError,
+  InvalidResourceTypeError,
+  InvalidUrlError,
+} from '../shared/Error'
 
 describe('Resource Model', () => {
   const urlValidator: ResourceValidator = new UrlValidator()
@@ -36,7 +41,7 @@ describe('Resource Model', () => {
   it('should throw an error for empty URL', () => {
     expect(() => {
       new Resource('image', '', urlValidator, uuid)
-    }).toThrow('URL cannot be empty')
+    }).toThrow(EmptyUrlError)
   })
 
   it('should throw an error for invalid resource type', () => {
@@ -47,12 +52,12 @@ describe('Resource Model', () => {
         urlValidator,
         uuid
       )
-    }).toThrow('Invalid resource type. Type must be either video or image')
+    }).toThrow(InvalidResourceTypeError)
   })
 
   it('should throw an error for invalid URL', () => {
     expect(() => {
       new Resource('video', 'invalid-url', urlValidator, uuid)
-    }).toThrow('Invalid URL')
+    }).toThrow(InvalidUrlError)
   })
 })

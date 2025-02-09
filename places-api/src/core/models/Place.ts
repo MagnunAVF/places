@@ -1,3 +1,4 @@
+import { EmptyDescriptionError, EmptyNameError } from '../shared/Error'
 import Id from '../shared/Id'
 import Resource from './Resource'
 
@@ -12,11 +13,11 @@ class Place {
     public updatedAt?: Date
   ) {
     if (!name) {
-      throw new Error('Name cannot be empty or null or undefined')
+      throw new EmptyNameError()
     }
 
     if (!description) {
-      throw new Error('Description cannot be empty or null or undefined')
+      throw new EmptyDescriptionError()
     }
 
     this.id = id ? id : ID.generate()
