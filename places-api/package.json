@@ -11,6 +11,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:wc": "jest --watch --coverage",
+    "test:e2e": "./test/scripts/start-env.sh && jest test/e2e && ./test/scripts/stop-env.sh",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
